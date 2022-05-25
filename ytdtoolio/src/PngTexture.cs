@@ -11,6 +11,8 @@ using RageLib.ResourceWrappers;
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Textures;
 using RageLib.GTA5.ResourceWrappers.PC.Textures;
+using StbDxtSharp;
+using StbImageSharp;
 
 namespace ytdtoolio {
 	class Meta {
@@ -29,6 +31,7 @@ namespace ytdtoolio {
 	class PngTexture {
 		Image image;
 		Meta meta = new Meta();
+		private string Path { get; set; }
 
 		public TextureFormat Format { get => meta.Format; }
 		public int MipMapLevels { get => meta.MipMapLevels; }
@@ -56,6 +59,7 @@ namespace ytdtoolio {
 		static public PngTexture Load(string path) {
 			Console.WriteLine($"  Loading {path}:");
 			var img = new PngTexture(Image.Load(path));
+			img.Path = path;
 
 			try {
 				img.meta = Meta.Load($"{path}.json");
@@ -69,16 +73,12 @@ namespace ytdtoolio {
 				img.meta.MipMapLevels = maxMip;
 			}
 
+			//Use max mip level
+			img.meta.MipMapLevels = maxMip;
 			return img;
 		}
-	
+
 		public ITexture ToTexture(string name) {
-			// This is an absolute MESS
-			var imgs = image.GenerateMipMaps(MipMapLevels); 
-			var bytes =	imgs
-				.Select(img => Format.Size(img.Width, img.Height))
-				.Sum();
-			
 			var tex = new TextureWrapper_GTA5_pc() {
 				texture = new TextureDX11() {
 					Name = (string_r)name,
@@ -88,14 +88,19 @@ namespace ytdtoolio {
 					Format = (uint)Format,
 					Stride = (ushort)Format.Stride(Width),
 					Data = new TextureData_GTA5_pc() {
-						FullData = new byte[bytes]
+						FullData = new byte[0]
 					}
 				}
 			};
 
-			for (int i = 0; i < MipMapLevels; i++) {
-				tex.SetTextureData(imgs[i].ToPixelData(Format), i+1);
+			using (var stream = File.OpenRead(Path))
+			{
+				ImageResult imageFromMemory = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+				var compressDxt5 = StbDxt.CompressDxt5(imageFromMemory.Width, imageFromMemory.Height, imageFromMemory.Data);
+
+				tex.SetTextureData(compressDxt5);
 			}
+			
 
 			tex.UpdateClass();
 			return tex;

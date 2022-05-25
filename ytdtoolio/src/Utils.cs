@@ -73,7 +73,7 @@ namespace ytdtoolio {
 			for (int i = 1; i < levels; i++) {
 				int w = img.Width  / (int)Math.Pow(2, i);
 				int h = img.Height / (int)Math.Pow(2, i);
-
+				
 				imgs[i] = img.Clone(ctx => ctx.Resize(w, h, KnownResamplers.Lanczos3));
 			}
 
@@ -103,7 +103,7 @@ namespace ytdtoolio {
 			case D3DFMT_A1R5G5B5: return image.ToPixelData<Bgra5551>(fmt);
 			case D3DFMT_A8B8G8R8: return image.ToPixelData<Rgba32  >(fmt);
 			}
-
+			
 			var uncompressed = image.ToPixelData<Rgba32>(D3DFMT_A8B8G8R8);
 			var compressed = new byte[fmt.Size(image.Width, image.Height)];
 			if (!FuckDX.encode(uncompressed, fmt, 2, image.Width, image.Height, compressed)) {

@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YTDToolio", "ytdtoolio\YTDToolio.csproj", "{FEBA643E-1311-41AA-84FB-694031A9FC83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epsylon.TextureSquish", "..\TextureSquish\Epsylon.TextureSquish\Epsylon.TextureSquish.csproj", "{919B4250-2642-4E66-B39A-0C2C53A71EA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{FEBA643E-1311-41AA-84FB-694031A9FC83}.Release|x64.Build.0 = Release|Any CPU
 		{FEBA643E-1311-41AA-84FB-694031A9FC83}.Release|x86.ActiveCfg = Release|Any CPU
 		{FEBA643E-1311-41AA-84FB-694031A9FC83}.Release|x86.Build.0 = Release|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Debug|x64.Build.0 = Debug|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Debug|x86.Build.0 = Debug|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Release|x64.ActiveCfg = Release|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Release|x64.Build.0 = Release|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Release|x86.ActiveCfg = Release|Any CPU
+		{919B4250-2642-4E66-B39A-0C2C53A71EA9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

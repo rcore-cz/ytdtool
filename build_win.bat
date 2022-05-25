@@ -15,7 +15,7 @@ if not exist "bin" mkdir "bin"
 
 :: Build FuckDX
 cd "fuckdx\"
-	premake5 vs2019
+	premake5 vs2022
 
 	cd "build\"
 		msbuild FuckDX.sln -m -nologo -v:m -p:Configuration=Release
