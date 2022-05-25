@@ -1,6 +1,11 @@
-[![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dkngrektor%26type%3Dpatrons&style=flat)](https://patreon.com/kngrektor)
-
 # YTD Tool
+
+Original repository: https://github.com/kngrektor/ytdtool
+
+````
+Used StbDxtSharp and StbImageSharp library to compress texture data
+to DTX5.
+````
 
 Simple tooling to list, unpack/export and pack/import textures of/to a `*.ytd` GTA V (PC) TextureDictionary file. This could be used to e.g. automate resizing the textures of a FiveM resource.
 
