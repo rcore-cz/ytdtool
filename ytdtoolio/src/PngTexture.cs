@@ -73,22 +73,26 @@ namespace ytdtoolio {
 				img.meta.MipMapLevels = maxMip;
 			}
 
-			//Use max mip level
 			img.meta.MipMapLevels = maxMip;
 			return img;
 		}
 
 		public ITexture ToTexture(string name) {
+			// var imgs = image.GenerateMipMaps(MipMapLevels); 
+			// var bytes =	imgs
+			// 	.Select(img => Format.Size(img.Width, img.Height))
+			// 	.Sum();
+			//
 			var tex = new TextureWrapper_GTA5_pc() {
 				texture = new TextureDX11() {
 					Name = (string_r)name,
 					Width = (ushort)Width,
 					Height = (ushort)Height,
-					Levels = (byte)MipMapLevels,
+					Levels = (byte)1,
 					Format = (uint)Format,
 					Stride = (ushort)Format.Stride(Width),
 					Data = new TextureData_GTA5_pc() {
-						FullData = new byte[0]
+						FullData = new byte[Width*Height],
 					}
 				}
 			};
@@ -100,7 +104,6 @@ namespace ytdtoolio {
 
 				tex.SetTextureData(compressDxt5);
 			}
-			
 
 			tex.UpdateClass();
 			return tex;

@@ -7,6 +7,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 using static RageLib.ResourceWrappers.TextureFormat;
 using RageLib.ResourceWrappers;
+using StbDxtSharp;
 
 namespace ytdtoolio {
 	class FuckDX {
@@ -62,6 +63,52 @@ namespace ytdtoolio {
 			}
 
 			return Image.LoadPixelData<Rgba32>(uncompressed, w, h);
+		}
+	}
+	
+	static class ImageExt {
+		public static Image[] GenerateMipMaps(this Image img, int levels) {
+			var imgs = new Image[levels];
+			imgs[0] = img;
+
+			for (int i = 1; i < levels; i++) {
+				int w = img.Width  / (int)Math.Pow(2, i);
+				int h = img.Height / (int)Math.Pow(2, i);
+
+				imgs[i] = img.Clone(ctx => ctx.Resize(w, h, KnownResamplers.Lanczos3));
+			}
+
+			return imgs;
+		}
+
+		public static byte[] ToPixelData<T>(this Image image, TextureFormat fmt)
+			where T: unmanaged, IPixel<T>
+		{
+			var img = image.CloneAs<T>();
+			var stride = fmt.Stride(img.Width);
+			var bytes = new byte[fmt.Size(img.Width, img.Height)];
+
+			for (int i = 0; i < img.Height; i++) {				
+				MemoryMarshal.AsBytes(img.GetPixelRowSpan(i))
+					.CopyTo(bytes.AsSpan(stride*i, stride));
+			}
+
+			return bytes;
+		}
+
+		public static byte[] ToPixelData(this Image image, TextureFormat fmt) {
+			switch (fmt) {
+				case D3DFMT_A8R8G8B8: return image.ToPixelData<Bgra32  >(fmt);
+				case D3DFMT_L8:       return image.ToPixelData<L8      >(fmt);
+				case D3DFMT_A8:       return image.ToPixelData<A8      >(fmt);
+				case D3DFMT_A1R5G5B5: return image.ToPixelData<Bgra5551>(fmt);
+				case D3DFMT_A8B8G8R8: return image.ToPixelData<Rgba32  >(fmt);
+			}
+
+			var uncompressed = image.ToPixelData<Rgba32>(D3DFMT_A8B8G8R8);
+			var compressed = StbDxt.CompressDxt5(image.Width, image.Height, uncompressed, CompressionMode.HighQuality);
+
+			return compressed;
 		}
 	}
 }
